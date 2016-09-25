@@ -52,7 +52,8 @@ module.exports = function(basePath, options) {
   return function webpMiddleware(req, res, next) {
     var mimeType = mime.lookup(req.originalUrl);
     var pathOptions = [];
-    var accept = req.headers.accept;
+    var acceptHeaders = req.headers.accept;
+    var accept = (acceptHeaders && typeof acceptHeaders === "string") ? acceptHeaders.split(",") : acceptHeaders;
 
     var hasMimetype = supportedMimes.indexOf(mimeType) !== -1;
     var acceptWebp = Array.isArray(accept) && accept.indexOf('image/webp') !== -1;
